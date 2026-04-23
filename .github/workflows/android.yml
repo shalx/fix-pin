@@ -1,1 +1,24 @@
 
+name: Android Build
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 17
+
+    - name: Build TWA
+      run: |
+        npm install -g @bubblewrap/cli
+        bubblewrap init --manifest=https://shalx.github.io/manifest.json --directory .
+        bubblewrap build
